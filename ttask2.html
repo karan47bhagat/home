@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Timeline UI</title>
+  <style>
+    /* Reset & base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9fafb;
+      color: #1f2937;
+      padding: 2rem;
+    }
+
+    /* Container for timeline */
+    .timeline-container {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      padding-top: 3rem;
+      padding-bottom: 1rem;
+    }
+
+    /* The horizontal line */
+    .timeline-line {
+      position: absolute;
+      top: 2rem;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #1898be, #14b68f);
+      border-radius: 2px;
+      z-index: 1;
+    }
+
+    /* Timeline items grid */
+    .timeline-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Each timeline box */
+    .timeline-item {
+      background: white;
+      border-radius: 12px;
+      padding: 1.8rem 1.6rem 2rem;
+      box-shadow: 0 4px 8px rgb(0 0 0 / 0.05);
+      text-align: center;
+      position: relative;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      user-select: none;
+    }
+
+    /* Year text */
+    .timeline-year {
+      color: #0582c1;
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin-bottom: 0.9rem;
+    }
+
+    /* Description text */
+    .timeline-desc {
+      font-weight: 400;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      padding: 0 0.3rem;
+      color: #374151;
+      white-space: pre-line;
+    }
+    
+    /* Circular markers above each timeline item */
+    .timeline-marker {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: #0b85b8;
+      border: 3px solid transparent;
+      position: absolute;
+      top: -1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      transition: background-color 0.3s, border-color 0.3s;
+      box-shadow: 0 0 6px rgb(24 152 190 / 0.6);
+    }
+
+    /* Special first marker */
+    .timeline-marker.first {
+      background-color: #14b68f;
+      border-color: #14b68f;
+      box-shadow: 0 0 8px rgb(20 182 143 / 0.8);
+    }
+
+    /* For smaller screens: stack items in single column */
+    @media (max-width: 600px) {
+      .timeline-items {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .timeline-item {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="timeline-container" aria-label="Career Timeline">
+    <div class="timeline-line"></div>
+    <div class="timeline-items">
+      <article class="timeline-item" tabindex="0" aria-describedby="desc-1982" aria-label="Year 1982">
+        <div class="timeline-marker first" aria-hidden="true"></div>
+        <h3 class="timeline-year">1982</h3>
+        <p id="desc-1982" class="timeline-desc">
+          Started as Medical Representative at Bevit Pharmaceuticals.
+        </p>
+      </article>
+
+      <article class="timeline-item" tabindex="0" aria-describedby="desc-1987" aria-label="Year 1987">
+        <div class="timeline-marker" aria-hidden="true"></div>
+        <h3 class="timeline-year">1987</h3>
+        <p id="desc-1987" class="timeline-desc">
+          Promoted to Area Manager, expanded Karnataka operations.
+        </p>
+      </article>
+
+      <article class="timeline-item" tabindex="0" aria-describedby="desc-1994" aria-label="Year 1994">
+        <div class="timeline-marker" aria-hidden="true"></div>
+        <h3 class="timeline-year">1994</h3>
+        <p id="desc-1994" class="timeline-desc">
+          Became Regional Manager, led 25-member team.
+        </p>
+      </article>
+
+      <article class="timeline-item" tabindex="0" aria-describedby="desc-1998" aria-label="Year 1998">
+        <div class="timeline-marker" aria-hidden="true"></div>
+        <h3 class="timeline-year">1998</h3>
+        <p id="desc-1998" class="timeline-desc">
+          Assigned Maharashtra region for business expansion.
+        </p>
+      </article>
+    </div>
+  </section>
+</body>
+</html>
+

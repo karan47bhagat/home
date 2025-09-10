@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Registration Form</title>
+  <style>
+    /* Reset & base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #e9ecef;
+      color: #3a3a3a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+    h1,h2,h3,h4,h5,h6 {
+      margin: 0;
+    }
+
+    /* Top and bottom bars */
+    .header-bar, .footer-bar {
+      background: white;
+      width: 100%;
+      max-width: 720px;
+      padding: 1rem 0;
+      border-radius: 8px;
+      margin-bottom: 1.75rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow:
+        0 6px 12px rgb(0 0 0 / 0.07),
+        0 3px 6px rgb(0 0 0 / 0.05);
+    }
+    .header-bar {
+      color: #4a47d5;
+      user-select: none;
+    }
+    .footer-bar {
+      color: #138552;
+      user-select: none;
+    }
+
+    /* Main form container */
+    form {
+      background: linear-gradient(135deg, #f6e8ff 0%, #ffe6f0 100%);
+      border-radius: 12px;
+      max-width: 720px;
+      width: 100%;
+      box-shadow:
+        0 12px 24px rgb(0 0 0 / 0.08),
+        0 6px 12px rgb(0 0 0 / 0.05);
+      padding: 1.4rem 1.6rem 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Title bar gradient */
+    .form-title-bar {
+      background: linear-gradient(90deg, #8e2de2, #c33764);
+      padding: 1.2rem 1rem;
+      border-radius: 12px 12px 0 0;
+      color: white;
+      font-weight: 700;
+      font-size: 1.3rem;
+      text-align: center;
+      user-select: none;
+      margin: 0 -1.6rem 1.35rem -1.6rem;
+      box-shadow:
+        0 4px 10px rgb(195 55 100 / 0.5);
+    }
+
+    /* Grid styling */
+    .row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .row.gap-small {
+      gap: 0.75rem;
+    }
+    .row.gap-tiny {
+      gap: 0.5rem;
+    }
+
+    .col-2 {
+      flex: 1 1 45%;
+      min-width: 200px;
+      display: flex;
+      flex-direction: column;
+    }
+    .col-3 {
+      flex: 1 1 28%;
+      min-width: 120px;
+      display: flex;
+      flex-direction: column;
+    }
+    .col-4 {
+      flex: 1 1 20%;
+      min-width: 80px;
+      display: flex;
+      flex-direction: column;
+    }
+    .col-full {
+      flex: 1 1 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Labels */
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: #3c3c3c;
+      user-select: none;
+    }
+
+    /* Inputs */
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select,
+    textarea {
+      padding: 0.475rem 0.65rem;
+      font-size: 0.9rem;
+      border-radius: 5px;
+      border: 1.8px solid #ddd;
+      transition: border-color 0.25s ease-in-out;
+      font-family: inherit;
+      resize: vertical;
+      background: white;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #9b59b6;
+      box-shadow: 0 0 8px rgba(155,89,182,0.4);
+    }
+    textarea {
+      min-height: 72px;
+      font-family: inherit;
+    }
+
+    /* Radio and Checkbox container */
+    .input-inline-group {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      margin-top: 0.25rem;
+    }
+    .input-inline-group label {
+      font-weight: 400;
+      font-size: 0.9rem;
+      user-select: none;
+      align-items: center;
+      display: flex;
+      gap: 0.375rem;
+      cursor: pointer;
+    }
+    input[type="radio"],
+    input[type="checkbox"] {
+      cursor: pointer;
+      width: 17px;
+      height: 17px;
+      margin: 0;
+      accent-color: #ab47bc;
+      flex-shrink: 0;
+    }
+
+    /* Table for qualification */
+    .qualification-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.8rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      background: white;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow:
+        inset 0 0 8px rgb(0 0 0 / 0.03);
+    }
+    .qualification-table th,
+    .qualification-table td {
+      padding: 0.5rem 0.8rem;
+      text-align: center;
+      border: 1px solid #ddd;
+      user-select: none;
+      vertical-align: middle;
+    }
+    .qualification-table th {
+      background: #f3e5f5;
+      font-weight: 600;
+      color: #6a1b9a;
+    }
+    .qualification-table td input[type="text"] {
+      max-width: 80px;
+      padding: 0.3rem 0.5rem;
+      border: 1.5px solid #ccc;
+      border-radius: 4px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+    .qualification-table td input[type="text"]:focus {
+      border-color: #9b59b6;
+      box-shadow: 0 0 6px rgba(155,89,182,0.4);
+      outline: none;
+    }
+
+    /* Buttons container */
+    .form-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+
+    button, input[type="reset"] {
+      cursor: pointer;
+      border: none;
+      padding: 0.55rem 1.3rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    input[type="reset"] {
+      background: #f8f9fa;
+      box-shadow:
+        0 2px 5px rgb(0 0 0 / 0.07);
+      color: #555;
+      border: 1.5px solid #ddd;
+    }
+    input[type="reset"]:hover {
+      background: #eaeaea;
+      border-color: #ccc;
+    }
+
+    button[type="submit"] {
+      background: linear-gradient(135deg, #8e2de2, #c33764);
+      color: white;
+      box-shadow: 
+        0 4px 8px rgb(195 55 100 / 0.6);
+      border: none;
+      font-weight: 700;
+    }
+    button[type="submit"]:hover {
+      filter: brightness(1.1);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 640px) {
+      .row {
+        flex-direction: column;
+      }
+      .col-2, .col-3, .col-4 {
+        min-width: 100%;
+      }
+      .input-inline-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-bar" aria-label="Page header">
+    Modern Registration Form
+  </div>
+
+  <form aria-label="Student Registration Form" novalidate>
+    <div class="form-title-bar" aria-level="2" role="heading">
+      Student Registration Form
+    </div>
+
+    <!-- Name fields -->
+    <div class="row gap-small" style="margin-bottom: 1rem;">
+      <div class="col-2">
+        <label for="fname">First Name</label>
+        <input type="text" id="fname" name="fname" placeholder="Enter first name" autocomplete="given-name" />
+      </div>
+      <div class="col-2">
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" name="lname" placeholder="Enter last name" autocomplete="family-name" />
+      </div>
+    </div>
+
+    <label>Date of Birth</label>
+    <div class="row gap-small" style="margin-bottom: 1rem;">
+      <div class="col-3">
+        <select name="dob-day" id="dob-day" aria-label="Day of birth">
+          <option value="" disabled selected>Day</option>
+          <!-- Days 1-31 -->
+          <script>
+            for(let d=1; d<=31; d++){
+              document.write(`<option value="${d}">${d}</option>`);
+            }
+          </script>
+        </select>
+      </div>
+      <div class="col-3">
+        <select name="dob-month" id="dob-month" aria-label="Month of birth">
+          <option value="" disabled selected>Month</option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+      </div>
+      <div class="col-3">
+        <select name="dob-year" id="dob-year" aria-label="Year of birth">
+          <option value="" disabled selected>Year</option>
+          <!-- Years from 1950 to current year -->
+          <script>
+            const currentYear = new Date().getFullYear();
+            for(let y=currentYear; y>=1950; y--){
+              document.write(`<option value="${y}">${y}</option>`);
+            }
+          </script>
+        </select>
+      </div>
+    </div>
+
+    
+    <div class="row gap-small" style="margin-bottom: 1rem;">
+      <div class="col-2">
+        <label for="email">Email ID</label>
+        <input type="email" id="email" name="email" placeholder="Enter email address" autocomplete="email" />
+      </div>
+      <div class="col-2">
+        <label for="mobile">Mobile Number</label>
+        <input type="text" id="mobile" name="mobile" placeholder="Enter 10-digit mobile number" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" />
+      </div>
+    </div>
+
+   
+    <div class="col-full" style="margin-bottom: 1rem;">
+      <label>Gender</label>
+      <div class="input-inline-group" role="radiogroup" aria-labelledby="gender-label">
+        <label><input type="radio" name="gender" value="male" /> Male</label>
+        <label><input type="radio" name="gender" value="female" /> Female</label>
+      </div>
+    </div>
+
+    <div class="col-full" style="margin-bottom: 1rem;">
+      <label for="address">Address</label>
+      <textarea id="address" name="address" placeholder="Enter your full address"></textarea>
+    </div>
+
+   
+    <div class="row gap-small" style="margin-bottom: 1rem;">
+      <div class="col-3">
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" placeholder="Enter city" />
+      </div>
+      <div class="col-3">
+        <label for="pincode">PIN Code</label>
+        <input type="text" id="pincode" name="pincode" placeholder="Enter 6-digit PIN code" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" />
+      </div>
+      <div class="col-3">
+        <label for="state">State</label>
+        <input type="text" id="state" name="state" placeholder="Enter state" />
+      </div>
+    </div>
+
+    <!-- Country -->
+    <div class="col-full" style="margin-bottom: 1rem;">
+      <label for="country">Country</label>
+      <select id="country" name="country" aria-label="Select country">
+        <option value="" disabled selected>Select country</option>
+        <option>United States</option>
+        <option>India</option>
+        <option>United Kingdom</option>
+        <option>Canada</option>
+        <option>Australia</option>
+        <option>Germany</option>
+        <option>France</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <!-- Hobbies -->
+    <div class="col-full" style="margin-bottom: 0.9rem;">
+      <label>Hobbies</label>
+      <div class="input-inline-group" aria-label="Select hobbies">
+        <label><input type="checkbox" name="hobbies" value="drawing" /> Drawing</label>
+        <label><input type="checkbox" name="hobbies" value="singing" /> Singing</label>
+        <label><input type="checkbox" name="hobbies" value="dancing" /> Dancing</label>
+        <label><input type="checkbox" name="hobbies" value="sketching" /> Sketching</label>
+        <label><input type="checkbox" name="hobbies" value="others" /> Others</label>
+      </div>
+    </div>
+
+    <!-- Qualification table -->
+    <fieldset style="border:none; padding: 0; margin-bottom: 1rem;">
+      <legend style="font-size: 1rem; font-weight: 600; padding-bottom: 0.3rem; user-select:none;">Qualification</legend>
+      <table class="qualification-table" aria-describedby="qualification-desc">
+        <thead>
+          <tr>
+            <th>Sr.No.</th>
+            <th>Examination</th>
+            <th>Board</th>
+            <th>Percentage</th>
+            <th>Year of Passing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td style="user-select:none;">Class X</td>
+            <td><input type="text" name="board_x" maxlength="15" autocomplete="off" /></td>
+            <td><input type="text" name="percent_x" maxlength="5" autocomplete="off" /></td>
+            <td><input type="text" name="year_x" maxlength="4" autocomplete="off" /></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td style="user-select:none;">Class XII</td>
+            <td><input type="text" name="board_xii" maxlength="15" autocomplete="off" /></td>
+            <td><input type="text" name="percent_xii" maxlength="5" autocomplete="off" /></td>
+            <td><input type="text" name="year_xii" maxlength="4" autocomplete="off" /></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td style="user-select:none;">Graduation</td>
+            <td><input type="text" name="board_grad" maxlength="15" autocomplete="off" /></td>
+            <td><input type="text" name="percent_grad" maxlength="5" autocomplete="off" /></td>
+            <td><input type="text" name="year_grad" maxlength="4" autocomplete="off" /></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td style="user-select:none;">Masters</td>
+            <td><input type="text" name="board_masters" maxlength="15" autocomplete="off" /></td>
+            <td><input type="text" name="percent_masters" maxlength="5" autocomplete="off" /></td>
+            <td><input type="text" name="year_masters" maxlength="4" autocomplete="off" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+
+    <!-- Courses Applied For -->
+    <div class="col-full" style="margin-bottom: 1.5rem;">
+      <label>Courses Applied For</label>
+      <div class="input-inline-group" role="radiogroup" aria-label="Choose courses to apply for">
+        <label><input type="radio" name="course" value="bca" /> BCA</label>
+        <label><input type="radio" name="course" value="bcom" /> B.Com</label>
+        <label><input type="radio" name="course" value="bsc" /> B.Sc</label>
+        <label><input type="radio" name="course" value="ba" /> B.A</label>
+      </div>
+    </div>
+
+    <div class="form-buttons">
+      <input type="reset" value="Reset" />
+      <button type="submit">Submit</button>
+    </div>
+
+  </form>
+
+  <div class="footer-bar" aria-label="Page footer">
+    Professional Registration Form
+  </div>
+
+</body>
+</html>
+.
